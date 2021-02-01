@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MAIN</title>
+    <link rel="stylesheet" href="/static/styles/style.css">
+</head>
+<body>
+<div>
+    <form th:method="POST" th:action="@{/main}" th:object="${newMessage}" enctype="multipart/form-data">
+        <label for="newMessage">Новое сообщение</label>
+        <input type="text" th:field="*{text}" id="newMessage" >
+        <label for="newTag">Новый ТЭГ</label>
+        <input type="text" th:field="*{tag}" id="newTag" >
+        <input type="file" name="file">
+        <input type="submit" name="POST MESSAGE">
+    </form>
+    <form th:method="POST" th:action="@{/filter}">
+        <label for="filter">filter tag</label>
+        <input type="text" id="filter" name="filter">
+        <input type="submit" name="FILTER">
+    </form>
+
+</div>
+<!--<H2 th:text="${some}"></H2>-->
+<div>LENTA</div>
+
+
+
+
+<div th:each="message:${messages}">
+    <b th:text="${message.getId()}"></b>
+    <span th:text="${message.getText()}"></span>
+    <i th:text="${message.getTag()}"></i>
+    <strong th:text="${message.getAuthorName()}"/>
+    <div>
+        <img th:src="@{{filename} (filename=${message.getFilename()!=null} ? ${'/img/'+message.getFilename()} : 'static/img/unnamed.jpg')}">
+    </div>
+
+</div>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
+</body>
+</html>
